@@ -14,9 +14,9 @@ type App interface {
 }
 
 type app struct {
-	id uint64
-	secret string
-	namespace string
+	id         uint64
+	secret     string
+	namespace  string
 	secretByte []byte
 }
 
@@ -25,11 +25,11 @@ var Default = Flag("fbapp")
 // Defines flags to configure an application.
 func Flag(name string) App {
 	app := &app{}
-	flag.Uint64Var(&app.id, name + ".id", 0, "Facebook application ID.")
+	flag.Uint64Var(&app.id, name+".id", 0, "Facebook application ID.")
 	flag.StringVar(
-		&app.secret, name + ".secret", "", "Facebook application secret.")
+		&app.secret, name+".secret", "", "Facebook application secret.")
 	flag.StringVar(
-		&app.namespace, name + ".namespace", "", "Facebook application namespace.")
+		&app.namespace, name+".namespace", "", "Facebook application namespace.")
 	return app
 }
 
