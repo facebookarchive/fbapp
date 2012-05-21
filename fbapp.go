@@ -33,6 +33,15 @@ func Flag(name string) App {
 	return app
 }
 
+// Create a new App with the given configuration.
+func New(id uint64, secret string, namespace string) App {
+	return &app{
+		id: id,
+		secret: secret,
+		namespace: namespace,
+	}
+}
+
 func (a *app) ID() uint64 {
 	return a.id
 }
