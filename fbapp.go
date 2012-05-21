@@ -4,6 +4,8 @@ package fbapp
 
 import (
 	"flag"
+	"fmt"
+	"net/url"
 )
 
 type App interface {
@@ -11,6 +13,7 @@ type App interface {
 	Secret() string
 	Namespace() string
 	SecretByte() []byte
+	Set(values url.Values)
 }
 
 type app struct {
@@ -18,6 +21,7 @@ type app struct {
 	secret     string
 	namespace  string
 	secretByte []byte
+	appToken   string
 }
 
 var Default = Flag("fbapp")
@@ -36,8 +40,8 @@ func Flag(name string) App {
 // Create a new App with the given configuration.
 func New(id uint64, secret string, namespace string) App {
 	return &app{
-		id: id,
-		secret: secret,
+		id:        id,
+		secret:    secret,
 		namespace: namespace,
 	}
 }
@@ -59,4 +63,12 @@ func (a *app) SecretByte() []byte {
 		a.secretByte = []byte(a.secret)
 	}
 	return a.secretByte
+}
+
+// Set the app access token.
+func (a *app) Set(values url.Values) {
+	if a.appToken == "" {
+		a.appToken = fmt.Sprintf("%d|%s", a.id, a.secret)
+	}
+	values.Set("access_token", a.appToken)
 }
