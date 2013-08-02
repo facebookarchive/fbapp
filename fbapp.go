@@ -13,7 +13,7 @@ type App interface {
 	Secret() string
 	Namespace() string
 	SecretByte() []byte
-	Set(values url.Values)
+	Set(values url.Values) error
 }
 
 type app struct {
@@ -66,9 +66,10 @@ func (a *app) SecretByte() []byte {
 }
 
 // Set the app access token.
-func (a *app) Set(values url.Values) {
+func (a *app) Set(values url.Values) error {
 	if a.appToken == "" {
 		a.appToken = fmt.Sprintf("%d|%s", a.id, a.secret)
 	}
 	values.Set("access_token", a.appToken)
+	return nil
 }
