@@ -24,8 +24,6 @@ type app struct {
 	appToken   string
 }
 
-var Default = Flag("fbapp")
-
 // Defines flags to configure an application.
 func Flag(name string) App {
 	app := &app{}
